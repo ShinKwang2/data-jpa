@@ -20,18 +20,18 @@ public class Member {
     @JoinColumn(name = "team_id")
     private Team team;
 
-    @Builder(builderMethodName = "nameBuilder")
+    @Builder(builderMethodName = "name", buildMethodName = "of")
     public Member(String username) {
         this.username = username;
     }
 
     @Builder
-    private Member(String username, int age) {
+    public Member(String username, int age) {
         this.username = username;
         this.age = age;
     }
 
-    public static Member createMember(String username, int age, Team team) {
+    public static Member createMemberWithTeam(String username, int age, Team team) {
         Member member = Member.builder()
                 .username(username)
                 .age(age)

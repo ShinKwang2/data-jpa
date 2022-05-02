@@ -40,8 +40,8 @@ class MemberRepositoryTest {
     @Test
     void basicCRUD() {
         //given
-        Member member1 = Member.nameBuilder().username("member1").build();
-        Member member2 = Member.nameBuilder().username("member2").build();
+        Member member1 = new Member("member1");
+        Member member2 = new Member("member2");
         memberRepository.save(member1);
         memberRepository.save(member2);
 
