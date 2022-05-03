@@ -8,7 +8,11 @@ import javax.persistence.*;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @ToString(of = {"id", "username", "age"})
 @Entity
-public class Member {
+@NamedQuery(
+        name = "Member.findByUsername",
+        query = "select m from Member m where m.username = :username")
+@NamedEntityGraph(name = "Member.all", attributeNodes = @NamedAttributeNode("team"))
+public class Member extends BaseEntity {
 
     @Id @GeneratedValue
     @Column(name = "member_id")
@@ -20,7 +24,7 @@ public class Member {
     @JoinColumn(name = "team_id")
     private Team team;
 
-    @Builder(builderMethodName = "name", buildMethodName = "of")
+    @Builder(builderMethodName = "withName", buildMethodName = "nameBuild")
     public Member(String username) {
         this.username = username;
     }
@@ -48,5 +52,9 @@ public class Member {
     public void changeTeam(Team team) {
         this.team = team;
         team.getMembers().add(this);
+    }
+
+    public void changeName(String name) {
+        this.username = name;
     }
 }
